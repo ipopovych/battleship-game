@@ -2,7 +2,7 @@ import random
 from ship import Ship
 
 def create_field():
-    f = []
+    f = create_empty_field()
     for i in range(10):
         a = []
         for i in range(10):
@@ -77,7 +77,6 @@ def create_field():
                     f[cell[0] - 1][cell[1] - 1] = s
                     for c in surrounding_cells(cell):
                         present_ships.add(c)
-                #print(len(present_ships))
                 break
             else:
                 continue
@@ -120,4 +119,14 @@ def create_field():
     for i in range(4):
         place_one()
 
+    return f
+
+
+def create_empty_field():
+    f = []
+    for i in range(10):
+        a = []
+        for i in range(10):
+            a.append(None)
+        f.append(a)
     return f

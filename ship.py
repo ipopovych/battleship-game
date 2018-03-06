@@ -38,7 +38,6 @@ class Ship:
         coor = self.coordinates()
         if cell in coor:
             self._hit[coor.index(cell)] = True
-            print(self._hit)
             return True
         else:
             return False
