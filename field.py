@@ -18,15 +18,6 @@ class Field:
                 self._withships[cell[0]][cell[1]] = 'Shot'
                 return None
 
-    def present_ships(self):
-        """
-        Returns number of present not killed ships
-        """
-        p = 0
-        for s in self.ships:
-            if s.is_alive():
-                p += 1
-        return p
 
     def field_without_ships(self):
         s = '     A   B   C    D    E   F    G   H   I    J  \n'

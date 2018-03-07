@@ -14,12 +14,12 @@ class Game:
         pswd1 = input("{}, please create password: ".format(n1))
         p1 = Player(name=n1, password=pswd1)
 
-        self.players = {0: (p0, f0), 1: (p1, f1)}
+        self.players = {0: [p0, f0, 10], 1: [p1, f1, 10]}
         self._current_player = 0
 
     def run(self):
-        while (self.players[0][1].present_ships() > 0 and
-                       self.players[1][1].present_ships() > 0):
+        while (self.players[self._current_player][2] > 0 and
+                       self.players[abs(self._current_player - 1)][2] > 0):
 
             password = ""
             while not self.players[self._current_player][0].login(password):
@@ -35,17 +35,18 @@ class Game:
             self._current_player][0].read_position())
 
             if left == 0:
-                if (self.players[0][1].present_ships() > 0 and
-                            self.players[1][1].present_ships() > 0):
+                if (self.players[enemy][2] > 0):
+                    self.players[enemy][2] -= 1
                     print("Ship destroyed!")
-                else:
-                    print("Congrats, winner!")
-                    print("Your field:\n",
-                          self.players[self._current_player][1].
-                          field_with_ships())
-                    print("Enemy's field:\n",
-                          self.players[enemy][1].field_without_ships())
-                    print("Bye!")
+                    if (self.players[enemy][2] == 0):
+                        print("Congrats, {}, you are the winner!".format(
+                        self.players[enemy][0].name()))
+                        print("Your field:\n",
+                              self.players[self._current_player][1].
+                              field_with_ships())
+                        print("Enemy's field:\n",
+                              self.players[enemy][1].field_without_ships())
+                        print("Bye!")
             elif left in [1, 2, 3]:
                 print("Ship hurted! Hold on!")
             elif left == -1:

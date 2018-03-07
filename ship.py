@@ -49,7 +49,7 @@ class Ship:
             return -1
 
     def is_alive(self):
-        if self._hit[0]:
-            return False if len(set(self._hit)) == 1 else True
+        if self._hit[0] and len(set(self._hit)) == 1:
+            return False
         else:
             return True
