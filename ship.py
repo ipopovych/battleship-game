@@ -1,5 +1,3 @@
-import random
-
 class Ship:
 
     def __init__(self, length, bow=(1, 1), horizontal=False):
@@ -13,13 +11,18 @@ class Ship:
         self._length = length
         self.bow = bow
         self.horizontal = horizontal
-        self._hit = length * [False]
+
+        l = []
+        for i in range(length):
+            l.append(False)
+
+        self._hit = l
 
     def coordinates(self):
         coordinates = [self.bow]
         if self.horizontal:
             raw, col = self.bow[0], self.bow[1]
-            for i in range(self._length-1):
+            for i in range(self._length - 1):
                 col += 1
                 coordinates.append((raw, col))
         else:
@@ -33,11 +36,20 @@ class Ship:
         """
         Returns true if the ship was reached by gun.
         :param cell: tuple, cell to shoot
-        :return: bool
+        :return: None if no ship, -1 if already hurted,
+        0 if killed, 1,2,3 - parts left
         """
         coor = self.coordinates()
-        if cell in coor:
+        if self._hit[coor.index(cell)] is False:
+            if self._length == 1:
+                return 0
             self._hit[coor.index(cell)] = True
-            return True
+            return self._hit.count(False)
         else:
-            return False
+            return -1
+
+    def is_alive(self):
+        if self._hit[0]:
+            return False if len(set(self._hit)) == 1 else True
+        else:
+            return True
