@@ -50,11 +50,3 @@ class Field:
 
     def field(self):
         return self.field
-
-
-f = Field()
-print(f.field_with_ships())
-print(f.field_without_ships())
-f.shoot_at((0, 4))
-print(f.field_without_ships())
-print(f.field_with_ships())
