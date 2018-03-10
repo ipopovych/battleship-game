@@ -2,7 +2,7 @@ def read_field(filename):
     """
     Returns a dictionary with battleship field from file.
     :param filename: name of the file
-    :return: dictionary with fieks
+    :return: dictionary with field coordinates
     """
     with open(filename, 'r') as f:
         lines = f.read().split('\n')
@@ -24,12 +24,23 @@ def read_field(filename):
 
 
 def has_ship(data, cell):
+    """
+    Returns True if there is a ship on the given cell.
+    :param data: list(list(tuple())) - field data
+    :param cell: tuple(str, int) or tuple(int, str)
+    """
     if isinstance(cell[1], int):
         cell = (cell[1], cell[0])
     return True if data[cell] != 0 else False
 
 
 def ship_size(data, cell, get_ship=False):
+    """
+    Retrnd length of ship on given cell, if no ship - None
+    :param data: list(list(tuple)) - data of the field
+    :param cell: tuple(int, str) ot tuple(str, int)
+    :param get_ship: bool, if True - returns ship coordinates
+    """
     if isinstance(cell[1], int):
         cell = (cell[1], cell[0])
 
@@ -73,6 +84,10 @@ def ship_size(data, cell, get_ship=False):
 
 
 def is_valid(data):
+    """
+    Returns True if data is valid
+    and has 10 ships of appropriate sizes.
+    """
     ships = []
     ship_cells = {}
     for cell in data:
@@ -105,6 +120,11 @@ def is_valid(data):
 
 
 def field_to_str(data, bool=False):
+    """
+    Returns string representation of the field.
+    :param data: field data
+    :param bool: if Tue, returns string field with booleans.
+    """
     if bool:
         st = ''
         for i in range(1, 11):
@@ -121,4 +141,4 @@ def field_to_str(data, bool=False):
     return st
 
 
-
+# The last function is implemented in task 2, funcs.py, special for the game.

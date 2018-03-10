@@ -1,11 +1,12 @@
 class Ship:
-
+    """Indicates a battleship game ship."""
     def __init__(self, length, bow=(1, 1), horizontal=False):
         """
         :param length: int, size of the ship, 1 <= length <= 4
-        bow: coordinates tuple of left upper angle of the ship - (raw, column)
-        horizontal: bool, true if ship is horizontal
-        _hit: list of bool, True indicates shoot ships
+        :param bow: coordinates of left upper angle of the ship - (raw, column)
+        :param horizontal: bool, true if ship is horizontal
+
+        self._hit: list of bool, True indicates shoot ships
         """
         assert 1 <= length <= 4, "Ship init failed. Maximum length = 4"
         self._length = length
@@ -19,6 +20,9 @@ class Ship:
         self._hit = l
 
     def coordinates(self):
+        """
+        Returns list of tuple coordinates  of ship location.
+        """
         coordinates = [self.bow]
         if self.horizontal:
             raw, col = self.bow[0], self.bow[1]
@@ -34,10 +38,12 @@ class Ship:
 
     def shoot_at(self, cell):
         """
-        Returns true if the ship was reached by gun.
         :param cell: tuple, cell to shoot
-        :return: None if no ship, -1 if already hurted,
-        0 if killed, 1,2,3 - parts left
+        :return:
+            None if no ship
+            -1 if already shoot
+            0 if killed
+            1,2, or 3 - parts left to kill
         """
         coor = self.coordinates()
         if self._hit[coor.index(cell)] is False:
@@ -49,6 +55,7 @@ class Ship:
             return -1
 
     def is_alive(self):
+        """Returns True if there are parts that are not shoot"""
         if self._hit[0] and len(set(self._hit)) == 1:
             return False
         else:

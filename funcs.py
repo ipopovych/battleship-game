@@ -3,6 +3,17 @@ from ship import Ship
 
 
 def create_field():
+    """
+    Generates field for battleship game, randomly locates 10 ships:
+    length - number of ships
+       4   -   1
+       3   -   2
+       2   -   3
+       1   -   4
+
+    Return: list field, list of present ships
+    tuple( list(list(Ship, None)), list(Ship) )
+    """
     f = empty_field()
     ships = []
     left_coordinates = []
@@ -12,8 +23,17 @@ def create_field():
             left_coordinates.append((i, a))
 
     def locate_ship(length):
-
+        """
+        Creates a ship of given length and locates on the field f.
+        :param length: integer, from 1 to 4
+        :return: Ship object
+        """
         def check_placing(ship_cells):
+            """
+            Returns True if it is possible to locate ship on the field.
+            :param ship_cells: list of tuple coordinates.
+            :return: bool
+            """
             for cell in ship_cells:
                 sur = surrounding_cells(cell)
                 for cell in sur:
@@ -63,6 +83,10 @@ def create_field():
 
 
 def empty_field():
+    """
+    Returns empty field:
+    list of None 10x10
+    """
     f = []
     for i in range(10):
         a = []
@@ -73,6 +97,13 @@ def empty_field():
 
 
 def field_with_ships(field):
+    """
+    Returns a list field in which 'Ship'
+    string represents a ship.
+
+    :param field: list(list(Ship, None))
+    :return: list(list('Ship', None))
+    """
     f = empty_field()
     for i in range(10):
         for k in range(10):
@@ -83,6 +114,20 @@ def field_with_ships(field):
 
 
 def surrounding_cells(cell):
+    """
+    Returns list of cells that surround given cell on the field 10x10.
+    coordinates start from 0, so min cel is (0,0) max is (9,9).
+
+    :param cell: tuple(int, int) - coordinates of the cell
+    :return: list(tuple(int, int))
+
+    >>> surrounding_cells((2,1))
+    [(2, 1), (1, 1), (3, 1), (2, 0), (2, 2), (1, 0), (1, 2), (3, 2), (3, 0)]
+
+    >>> surrounding_cells((0,0))
+    [(0, 0), (0, 1), (1, 0), (1, 1)]
+
+    """
     x, y = cell[0], cell[1]
     if x == 0:
         if y == 0:
